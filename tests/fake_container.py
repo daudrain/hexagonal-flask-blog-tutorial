@@ -24,7 +24,7 @@ def _get_db() -> Callable[[], sqlite3.Connection]:
 
 class FakeContainer(containers.DeclarativeContainer):
     wiring_config = containers.WiringConfiguration(
-        packages=["blog.adapters.entrypoints.app.blueprints"]
+        packages=["blog.application.entrypoints.app.blueprints"]
     )
     db_connection = _get_db()
 

@@ -2,7 +2,7 @@ from dependency_injector.wiring import inject, Provide
 from flask import Blueprint, flash, g, redirect, render_template, request, url_for
 
 from blog.domain.ports.repositories.exceptions import BlogDBOperationError
-from src.blog.adapters.entrypoints.app.blueprints.auth import login_required
+from src.blog.application.entrypoints.app.blueprints.auth import login_required
 from src.blog.adapters.services.post import PostService
 from src.blog.domain.model.schemas import (
     create_post_factory,

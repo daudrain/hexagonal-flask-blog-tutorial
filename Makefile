@@ -75,7 +75,7 @@ test-cov:
 	${PYTHON} -m pytest -svvv --cov-report html --cov=src tests
 
 init-db:
-	${PYTHON} -m flask --app src.blog.adapters.entrypoints.app.application init-db
+	${PYTHON} -m flask --app src.blog.application.entrypoints.app.application init-db
 
 run:
-	${PYTHON} -m flask --app src.blog.adapters.entrypoints.app.application --debug run --host 0.0.0.0
+	${PYTHON} -m flask --app src.blog.application.entrypoints.app.application --debug run --host 0.0.0.0

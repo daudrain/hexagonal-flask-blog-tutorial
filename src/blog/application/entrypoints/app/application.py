@@ -1,7 +1,7 @@
 from flask import Flask
 
-from blog.adapters.entrypoints.app.blueprints.auth import blueprint as user_blueprint
-from blog.adapters.entrypoints.app.blueprints.blog import blueprint as blog_blueprint
+from blog.application.entrypoints.app.blueprints.auth import blueprint as user_blueprint
+from blog.application.entrypoints.app.blueprints.blog import blueprint as blog_blueprint
 from blog.configurator.config import init_app
 from blog.configurator.containers import Container
 

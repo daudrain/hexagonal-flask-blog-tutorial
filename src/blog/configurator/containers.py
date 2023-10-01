@@ -9,7 +9,7 @@ from blog.configurator.config import get_db
 
 class Container(containers.DeclarativeContainer):
     wiring_config = containers.WiringConfiguration(
-        packages=["blog.adapters.entrypoints.app.blueprints"]
+        packages=["blog.application.entrypoints.app.blueprints"]
     )
     db_connection = get_db()
 
