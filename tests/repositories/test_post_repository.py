@@ -1,4 +1,5 @@
 from copy import deepcopy
+from uuid import uuid4
 
 
 def test_add_post(get_fake_post_repository, get_post_model_object):
@@ -17,6 +18,12 @@ def test_get_post_by_uuid(get_fake_post_repository):
     uuid = values[0].uuid
     result = get_fake_post_repository.get_by_uuid(uuid)
     assert result.title == "awesome title"
+
+
+def test_get_post_by_wrong_uuid(get_fake_post_repository):
+    uuid = uuid4()
+    result = get_fake_post_repository.get_by_uuid(uuid)
+    assert result == None
 
 
 def test_get_all_posts(get_fake_post_repository):
