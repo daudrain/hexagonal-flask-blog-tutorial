@@ -22,19 +22,11 @@ You can read it from original author:
 
 ## How to install for development?
 
-Use virtualenv as:
+Assuming python3 is at least python3.10
 
 ```console
-python3 -m venv .venv
+make venv
 source .venv/bin/activate
-```
-
-We use flit for the installation:
-
-* Install flit:
-
-```console
-pip install flit==3.8.0
 ```
 
 * Install using make command for development:

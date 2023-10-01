@@ -23,6 +23,9 @@ help:
 	@echo "To run all security related commands -> make secure"
 	@echo "------------------------------------"
 
+venv:
+	@python3.10 -m venv .venv && . .venv/bin/activate && pip install -r requirements.txt
+
 install:
 	${PYTHON} -m flit install --env --deps=production
 
