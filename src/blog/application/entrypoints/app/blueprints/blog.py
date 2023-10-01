@@ -3,7 +3,7 @@ from flask import Blueprint, flash, g, redirect, render_template, request, url_f
 
 from blog.domain.ports.repositories.exceptions import BlogDBOperationError
 from src.blog.application.entrypoints.app.blueprints.auth import login_required
-from src.blog.adapters.services.post import PostService
+from src.blog.domain.ports.services.post import PostServiceInterface
 from src.blog.domain.model.schemas import (
     create_post_factory,
     delete_post_factory,
@@ -15,7 +15,7 @@ blueprint = Blueprint("post", __name__)
 
 @blueprint.route("/")
 @inject
-def index(post_service: PostService = Provide["post_service"]):
+def index(post_service: PostServiceInterface = Provide["post_service"]):
     posts = post_service.get_all_blogs()
     return render_template("post/index.html", posts=posts)
 
@@ -23,7 +23,7 @@ def index(post_service: PostService = Provide["post_service"]):
 @blueprint.route("/create", methods=("GET", "POST"))
 @login_required
 @inject
-def create(post_service: PostService = Provide["post_service"]):
+def create(post_service: PostServiceInterface = Provide["post_service"]):
     error = None
     if request.method == "POST":
         body, error, title = _validate_title_body(error)
@@ -53,7 +53,7 @@ def _validate_title_body(error):
 @blueprint.route("/update/<string:uuid>", methods=("GET", "POST"))
 @login_required
 @inject
-def update(uuid, post_service: PostService = Provide["post_service"]):
+def update(uuid, post_service: PostServiceInterface = Provide["post_service"]):
     post = post_service.get_post_by_uuid(uuid)
     error = None
     if request.method == "POST":
@@ -74,7 +74,7 @@ def update(uuid, post_service: PostService = Provide["post_service"]):
 @blueprint.route("/delete/<string:uuid>", methods=("POST",))
 @login_required
 @inject
-def delete(uuid, post_service: PostService = Provide["post_service"]):
+def delete(uuid, post_service: PostServiceInterface = Provide["post_service"]):
     post_service.get_post_by_uuid(uuid)
     _post = delete_post_factory(uuid=uuid)
     try:

@@ -13,7 +13,7 @@ from flask import (
 )
 from werkzeug.security import check_password_hash
 
-from blog.adapters.services.user import UserService
+from blog.domain.ports.services.user import UserServiceInterface
 from blog.domain.model.schemas import register_user_factory
 from blog.domain.ports.repositories.exceptions import UserDBOperationError
 
@@ -36,7 +36,7 @@ def login_required(view):
 @blueprint.before_app_request
 @inject
 def load_logged_in_user(
-    user_service: UserService = Provide["user_service"],
+    user_service: UserServiceInterface = Provide["user_service"],
 ):
     """If a user id is stored in the session, load the user object from
     the database into ``g.user``."""
@@ -50,7 +50,7 @@ def load_logged_in_user(
 
 @blueprint.route("/register", methods=("GET", "POST"))
 @inject
-def register(user_service: UserService = Provide["user_service"]):
+def register(user_service: UserServiceInterface = Provide["user_service"]):
     error = None
     if request.method == "POST":
         error, password, user_name = _check_user_name_password(error)
@@ -79,7 +79,7 @@ def _check_user_name_password(error):
 
 @blueprint.route("/login", methods=("GET", "POST"))
 @inject
-def login(user_service: UserService = Provide["user_service"]):
+def login(user_service: UserServiceInterface = Provide["user_service"]):
     error = None
     if request.method == "POST":
         error, user = _validate_user_name_and_password(error, user_service)
