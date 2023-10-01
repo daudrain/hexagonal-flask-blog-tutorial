@@ -1,8 +1,7 @@
 import datetime
 from uuid import uuid4
 
-from pydantic import BaseModel, UUID4
-from pydantic.class_validators import validator
+from pydantic import BaseModel, field_validator, FieldValidationInfo, UUID4
 from pydantic.fields import Field
 from werkzeug.security import generate_password_hash
 
@@ -36,20 +35,25 @@ class CreatePostInputDto(BaseModel):
 
     # Possible place for custom validators, or it can be delegated to factory
 
-    @validator("body")
-    def body_length(cls, v):
+    @field_validator("body")
+    @classmethod
+    def body_length(cls, v: str):
         if len(v) > 10000:
             raise ValueError("Body length must be maximum of 10000 characters")
         return v
 
-    @validator("title")
-    def title_length(cls, v):
+    @field_validator("title")
+    @classmethod
+    def title_length(cls, v: str):
         if len(v) > 100:
             raise ValueError("Title length must be maximum of 100 characters")
         return v
 
-    @validator("title", "body")
-    def title_and_body_should_not_be_empty(cls, v):
+    @field_validator("title", "body")
+    @classmethod
+    def title_and_body_should_not_be_empty(
+        cls, v: str, info: FieldValidationInfo
+    ) -> str:
         if not v:
             raise ValueError("Title and body must not be empty or None")
         return v
