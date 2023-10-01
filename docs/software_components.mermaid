@@ -1,0 +1,50 @@
+graph TD
+
+  subgraph Domain
+    subgraph Model
+        subgraph Entities
+            Post
+            User
+        end
+        subgraph Value Objects
+            RegisterUserOutputDto
+            RegisterUserInputDto
+        end
+    end
+    subgraph Ports
+        subgraph Inputs
+            PostServiceInterface
+            UserServiceInterface
+        end
+        subgraph Outputs
+            PostRepositoryInterface
+            UserRepositoryInterface
+        end
+    end
+  end
+  subgraph Adapters
+    subgraph AdapterPortsInputs
+        PostService
+        UserService
+    end
+    subgraph AdapterPortsOutputs
+        P[PostRepository]
+        U[UserRepository]
+    end
+  end
+  subgraph Application
+    subgraph BluePrints
+        auth
+        blog
+    end
+    subgraph AdapterPortsOutputs
+        P[PostRepository]
+        U[UserRepository]
+    end
+  end
+  subgraph Infrastructure
+    P --> K{Database Access}
+    U --> K{Database Access}
+    K --> I[Database]
+
+  end
